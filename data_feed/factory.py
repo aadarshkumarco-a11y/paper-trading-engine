@@ -23,6 +23,10 @@ def create_feed(kind: str | None = None) -> DataFeed:
         from data_feed.angel_feed import AngelDataFeed
 
         return AngelDataFeed()
+    if selected == "demo":
+        from data_feed.demo_feed import DemoDataFeed
+
+        return DemoDataFeed()
     raise ValueError(
-        f"Unknown data feed '{selected}'. Supported: yfinance, kite, angel."
+        f"Unknown data feed '{selected}'. Supported: yfinance, kite, angel, demo."
     )

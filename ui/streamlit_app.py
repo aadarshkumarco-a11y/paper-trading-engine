@@ -70,7 +70,7 @@ def render_sidebar() -> None:
     st.sidebar.header("Configuration")
     strategies = sorted(registered_strategies().keys())
     strategy = st.sidebar.selectbox("Strategy", strategies, index=0)
-    feed = st.sidebar.selectbox("Data feed", ["yfinance", "kite", "angel"], index=0)
+    feed = st.sidebar.selectbox("Data feed", ["yfinance", "kite", "angel", "demo"], index=0)
     symbols_text = st.sidebar.text_input(
         "Symbols (comma-separated)",
         value="INFY,TCS,RELIANCE",
