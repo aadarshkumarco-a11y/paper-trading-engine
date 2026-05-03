@@ -1,0 +1,16 @@
+pandas>=2.1.0
+numpy>=1.26.0
+requests>=2.31.0
+websocket-client>=1.7.0
+streamlit>=1.32.0
+plotly>=5.20.0
+yfinance>=0.2.40
+python-dotenv>=1.0.1
+pydantic>=2.6.0
+SQLAlchemy>=2.0.28
+# Optional Angel One SmartAPI live feed dependencies. Loaded lazily by
+# data_feed/angel_feed.py only when PAPER_TRADING_DATA_FEED=angel; harmless to
+# install up-front so users can switch to the Angel feed by adding ANGEL_*
+# secrets without redeploying.
+smartapi-python>=1.5.0
+pyotp>=2.9.0
