@@ -114,21 +114,41 @@ symbol, available as pandas Series via `closes(symbol)`, `highs(symbol)` and
 The engine works fully without broker credentials thanks to the yfinance
 fallback. To upgrade to a true WebSocket feed:
 
-1. Install the broker SDK:
-   ```bash
-   pip install kiteconnect          # Zerodha
-   # or
-   pip install smartapi-python pyotp  # Angel One
-   ```
-2. Set the credentials in `.env` (see `.env.example`).
-3. Switch the feed:
-   ```bash
-   PAPER_TRADING_DATA_FEED=kite python main.py --strategy RSI --symbols INFY
-   # or pass --feed kite on the CLI / select it in the UI
-   ```
+### Angel One SmartAPI (recommended)
 
-The `KiteDataFeed` wires `KiteTicker` ticks into the engine's `Tick` model;
-`AngelDataFeed` is a stub showing the same hook points.
+1. Install the SDK from [angel-one/smartapi-python](https://github.com/angel-one/smartapi-python):
+   ```bash
+   pip install smartapi-python pyotp
+   ```
+2. Generate an API key at https://smartapi.angelbroking.com.
+3. Fill in `.env`:
+   ```env
+   PAPER_TRADING_DATA_FEED=angel
+   ANGEL_API_KEY=...
+   ANGEL_CLIENT_CODE=...   # your AB / Angel client code
+   ANGEL_PASSWORD=...      # 6-digit MPIN
+   ANGEL_TOTP_SECRET=...   # QR / setup key from your authenticator app
+   ```
+4. Run as usual — the engine will:
+   - log in via `SmartConnect.generateSession` using a fresh `pyotp.TOTP`,
+   - download Angel's scrip master and resolve each symbol to its
+     `instrumenttoken`,
+   - open a `SmartWebSocketV2` connection in LTP mode,
+   - parse incoming ticks into the engine's `Tick` model and route them through
+     your strategy → execution → portfolio in real time.
+
+The Angel adapter is a **read-only** market-data feed for this paper-trading
+engine. We deliberately do **not** call `placeOrder` on Angel — every order
+goes through the simulated `ExecutionEngine`.
+
+### Zerodha Kite Connect
+
+```bash
+pip install kiteconnect
+```
+
+Set `KITE_API_KEY` + `KITE_ACCESS_TOKEN` and switch to `PAPER_TRADING_DATA_FEED=kite`.
+`KiteDataFeed` wires `KiteTicker` ticks into the engine's `Tick` model the same way.
 
 ## Risk management
 
