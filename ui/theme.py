@@ -245,6 +245,52 @@ h1 {{ font-weight: 700 !important; }}
   border: 1px solid var(--card-border) !important;
 }}
 
+/* Sidebar navigation list — Zerodha-Kite style */
+section[data-testid="stSidebarNav"] {{
+  background: transparent !important;
+}}
+section[data-testid="stSidebarNav"] ul {{
+  padding-top: 4px !important;
+}}
+section[data-testid="stSidebarNav"] a {{
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  margin: 2px 6px !important;
+  transition: background 140ms ease, transform 140ms ease, border-color 140ms ease !important;
+  border: 1px solid transparent !important;
+  color: var(--text) !important;
+}}
+section[data-testid="stSidebarNav"] a:hover {{
+  background: rgba(88,166,255,0.08) !important;
+  border-color: rgba(88,166,255,0.20) !important;
+  transform: translateX(2px) !important;
+}}
+section[data-testid="stSidebarNav"] a[aria-current="page"] {{
+  background: linear-gradient(135deg, rgba(0,255,159,0.10), rgba(88,166,255,0.10)) !important;
+  border-color: rgba(0,255,159,0.30) !important;
+  color: var(--profit) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 16px rgba(0,255,159,0.08);
+}}
+
+/* Smooth page-fade on rerun */
+[data-testid="stMain"] {{
+  animation: page-fade 220ms ease;
+}}
+@keyframes page-fade {{
+  from {{ opacity: 0; transform: translateY(4px); }}
+  to {{ opacity: 1; transform: none; }}
+}}
+
+/* Subtle glow on glass cards on hover */
+.glass-card {{
+  transition: border-color 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+}}
+.glass-card:hover {{
+  border-color: rgba(88,166,255,0.25);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.35), 0 0 0 1px rgba(88,166,255,0.08) inset;
+}}
+
 /* Hide Streamlit's "Made with Streamlit" footer for a cleaner trading-terminal look. */
 footer, #MainMenu {{ visibility: hidden; }}
 </style>
