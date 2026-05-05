@@ -379,7 +379,7 @@ def render_bottom_panel(app: TradingApp) -> None:
         equity_df = app.equity_df()
         perf = app.performance()
         m = st.columns(4)
-        m[0].metric("Win rate", f"{perf.win_rate * 100:.1f}%")
+        m[0].metric("Win rate", f"{perf.win_rate_pct:.1f}%")
         m[1].metric("ROI", f"{perf.roi_pct:+.3f}%")
         m[2].metric("Profit factor", f"{perf.profit_factor:.2f}" if perf.profit_factor else "—")
         m[3].metric("Max drawdown", f"{perf.max_drawdown_pct:.2f}%")
