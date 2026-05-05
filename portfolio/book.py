@@ -73,6 +73,13 @@ class Portfolio:
     def on_trade(self, callback: Callable[[Trade], None]) -> None:
         self._listeners.append(callback)
 
+    def remove_on_trade(self, callback: Callable[[Trade], None]) -> bool:
+        try:
+            self._listeners.remove(callback)
+            return True
+        except ValueError:
+            return False
+
     # ----- mutation -----
     def apply_trade(self, trade: Trade) -> Position:
         with self._lock:

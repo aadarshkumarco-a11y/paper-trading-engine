@@ -95,6 +95,10 @@ class TradingApp:
         with self._lock:
             if self.loop and self.loop.is_running:
                 raise RuntimeError("Stop the engine before swapping strategies.")
+            # Tear down the previous loop's callbacks so they don't keep
+            # firing on every tick / trade after a strategy swap.
+            if self.loop is not None:
+                self.loop.detach()
             self.strategy = strategy
             self.loop = TradingEventLoop(
                 feed=self.feed,

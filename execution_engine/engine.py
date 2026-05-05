@@ -48,6 +48,21 @@ class ExecutionEngine:
     def on_reject(self, callback: Callable[[Order], None]) -> None:
         self._reject_listeners.append(callback)
 
+    def remove_on_trade(self, callback: Callable[[Trade, Order], None]) -> bool:
+        """Remove a previously registered trade listener."""
+        try:
+            self._trade_listeners.remove(callback)
+            return True
+        except ValueError:
+            return False
+
+    def remove_on_reject(self, callback: Callable[[Order], None]) -> bool:
+        try:
+            self._reject_listeners.remove(callback)
+            return True
+        except ValueError:
+            return False
+
     def _emit_trade(self, trade: Trade, order: Order) -> None:
         for cb in list(self._trade_listeners):
             try:
