@@ -79,6 +79,15 @@ class DataFeed(ABC):
         with self._lock:
             self._callbacks.append(callback)
 
+    def remove_on_tick(self, callback: TickCallback) -> bool:
+        """Remove a previously registered tick callback. Returns True if removed."""
+        with self._lock:
+            try:
+                self._callbacks.remove(callback)
+                return True
+            except ValueError:
+                return False
+
     # ----- lifecycle -----
     @abstractmethod
     def start(self) -> None:
